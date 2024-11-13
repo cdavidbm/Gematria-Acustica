@@ -1,15 +1,45 @@
 # archivo principal que importa y organiza las funciones de los demás módulos
 
-from config import client
-from frequencias import crear_diccionario_frecuencias, frase_a_frecuencias
+from config import *
+from frequencias import *
 from color import generar_color_hexadecimal
 from combinaciones import encontrar_combinaciones_optimizada
 from input_usuario import obtener_numero_objetivo
 
-# Enviar las frecuencias a SuperCollider
+
+# Función para enviar frecuencias a SuperCollider
 def enviar_frecuencias(frecuencias):
     print(f"\n-> Enviando frecuencias: {frecuencias} Hz a SuperCollider\n")
     client.send_message("/frecuencia_palabra", frecuencias)
+
+# Función para actualizar configuración
+def actualizar_configuracion():
+    config = cargar_configuracion()
+    print("\n=== Configuración Actual ===")
+    print(f"1) Frecuencia base: {config['frecuencia_base']}")
+    print(f"2) Incremento: {config['incremento']}")
+    print("\nIntroduce el número de la opción que deseas modificar o '0' para regresar.")
+
+    opcion = input("Opción: ")
+    if opcion == "1":
+        try:
+            config["frecuencia_base"] = int(input("Introduce el nuevo valor para frecuencia base: "))
+        except ValueError:
+            print("Entrada inválida. Se requiere un número entero.")
+    elif opcion == "2":
+        try:
+            config["incremento"] = int(input("Introduce el nuevo valor para incremento: "))
+        except ValueError:
+            print("Entrada inválida. Se requiere un número entero.")
+    elif opcion == "0":
+        return
+
+    guardar_configuracion(config)
+    print("Configuración actualizada con éxito.\n")
+
+# Función para regenerar el diccionario de frecuencias después de la actualización
+def actualizar_frecuencias():
+    return crear_diccionario_frecuencias()
 
 # Crear el diccionario de frecuencias para el programa
 frecuencias = crear_diccionario_frecuencias()
@@ -24,6 +54,7 @@ while True:
     print(" 1) Convertir una palabra o frase a frecuencia ('acorde de palabras')")
     print(" 2) Enviar frecuencia exacta numérica")
     print(" 3) Encontrar combinaciones de letras para un número objetivo")
+    print(" 4) Configuración")
     print("---------------------------------------------------")
     opcion = input("Introduce una opción (o '0' para terminar): ")
 
@@ -58,6 +89,10 @@ while True:
         print(
             f"\nCombinaciones de letras para el objetivo {objetivo}: {combinaciones if combinaciones else 'Ninguna combinación encontrada'}\n"
         )
+    
+    elif opcion == "4":
+        actualizar_configuracion()
+        frecuencias = actualizar_frecuencias()
 
     else:
         print("Opción no válida, por favor elige una opción del menú.\n")

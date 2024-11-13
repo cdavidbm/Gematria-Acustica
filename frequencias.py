@@ -1,12 +1,15 @@
 # funciones relacionadas con la creación y conversión de frecuencias.
 
 import string
+from config import cargar_configuracion
 
 # Crear un diccionario de frecuencias asignadas a cada letra
 def crear_diccionario_frecuencias():
+    config = cargar_configuracion()
+    frecuencia_base = config["frecuencia_base"]
+    incremento = config["incremento"]
+    
     frecuencias = {}
-    frecuencia_base = 100
-    incremento = 1
     for i, letra in enumerate(string.ascii_lowercase):
         frecuencias[letra] = frecuencia_base + (i * incremento)
     return frecuencias
