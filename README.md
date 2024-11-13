@@ -1,7 +1,3 @@
-Aquí tienes un ejemplo de `README.md` para el proyecto:
-
----
-
 # Generador de Frecuencias para Frases
 
 Este proyecto convierte palabras y frases en frecuencias sonoras. El programa envía las frecuencias generadas a SuperCollider usando el protocolo OSC (Open Sound Control).
@@ -32,11 +28,12 @@ También sugiere colores únicos para representar cada palabra y permite buscar 
 
 El proyecto está dividido en varios módulos para facilitar su mantenimiento:
 
-- **frecuencia.py**: Generación de frecuencias a partir de letras y palabras.
 - **color.py**: Generación de colores hexadecimales únicos para cada palabra.
 - **combinaciones.py**: Búsqueda de combinaciones de letras que se aproximen a una frecuencia objetivo.
-- **interfaz.py**: Interfaz de usuario y lógica principal del programa.
-- **osc_client.py**: Configuración del cliente OSC para enviar mensajes a SuperCollider.
+- **config.py**: Configuración del cliente OSC para enviar mensajes a SuperCollider.
+- **frequencias.py**: Generación de frecuencias a partir de letras y palabras.
+- **input_usuario**: Esta vinculado con **combinaciones.py**. En este archivo se procesa el input cuando el usuario elige la opción de busqueda de palabras asociadas con una frecuencia específica.
+- **main.py**: Interfaz de usuario y lógica principal del programa.
 - **FullSynth.scd**: Sintetizador de SuperCollider.
 
 ## Uso
@@ -45,16 +42,8 @@ El proyecto está dividido en varios módulos para facilitar su mantenimiento:
 
 2. Ejecuta el programa en Python:
     ```bash
-    python interfaz.py
+    python main.py
     ```
-
-3. Sigue las opciones del menú en la terminal para:
-
-    - Convertir una palabra o frase a frecuencia (opción 1).
-    - Enviar una frecuencia específica a SuperCollider (opción 2).
-    - Buscar combinaciones de letras que se aproximen a una frecuencia objetivo (opción 3).
-
-4. Escribe `0` en cualquier momento para detener el programa y el envío de frecuencias.
 
 ## Ejemplo de Uso
 
@@ -70,6 +59,7 @@ Selecciona una opción:
  2) Enviar frecuencia exacta numérica
  3) Encontrar combinaciones de letras para un número objetivo
 ---------------------------------------------------
+Introduce una opción (o '0' para terminar): 
 ```
 
 - **Opción 1**: Convierte una palabra o frase en frecuencias y muestra un color hexadecimal único para cada palabra.
@@ -80,7 +70,5 @@ Selecciona una opción:
 
 - **Optimización**: El número máximo de combinaciones se limita a 100 para evitar sobrecargar el sistema.
 - **Tiempo límite**: La búsqueda de combinaciones tiene un límite de tiempo de 5 segundos para mejorar la eficiencia.
-
-
 
 ---

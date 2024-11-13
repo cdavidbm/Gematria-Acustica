@@ -36,8 +36,8 @@ while True:
         texto = input("\nIntroduce una palabra o frase: ")
         frecuencias_palabras = frase_a_frecuencias(texto, frecuencias)
         colores = generar_color_hexadecimal(texto)
-        print(f"\nFrecuencias para '{texto}': {frecuencias_palabras}")
-        print(f"Color hexadecimal para cada palabra: {colores}\n")
+        print(f"\nFrecuencias para:'{texto}'\n{frecuencias_palabras}")
+        print(f"\nColor hexadecimal para cada palabra:\n{colores}\n")
         enviar_frecuencias(frecuencias_palabras)
 
     elif opcion == "2":
