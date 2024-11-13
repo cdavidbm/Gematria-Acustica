@@ -58,6 +58,7 @@ Selecciona una opción:
  1) Convertir una palabra o frase a frecuencia ('acorde de palabras')
  2) Enviar frecuencia exacta numérica
  3) Encontrar combinaciones de letras para un número objetivo
+ 4) Configuración
 ---------------------------------------------------
 Introduce una opción (o '0' para terminar): 
 ```
@@ -65,6 +66,7 @@ Introduce una opción (o '0' para terminar):
 - **Opción 1**: Convierte una palabra o frase en frecuencias y muestra un color hexadecimal único para cada palabra.
 - **Opción 2**: Permite enviar una frecuencia específica a SuperCollider.
 - **Opción 3**: Busca combinaciones de letras que se aproximen a un número objetivo, con un límite de resultados para optimizar el rendimiento.
+- **Opción 4**: El programa asigna automaticamente 100Hz para la letra 'a', y va sumando 1Hz para las siguientes letras. Esta configuración se puede modificar aquí.
 
 ## Notas
 
