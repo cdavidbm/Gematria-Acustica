@@ -17,7 +17,9 @@ CONFIG_FILE_PATH = "config.json"
 # Valores predeterminados para la configuración
 default_config = {
     "frecuencia_base": 100,
-    "incremento": 1
+    "incremento": 1,
+    "ataque": 2,
+    "decaimiento": 1
 }
 
 # Cargar la configuración desde el archivo o usar valores predeterminados

@@ -9,8 +9,10 @@ from input_usuario import obtener_numero_objetivo
 
 # Función para enviar frecuencias a SuperCollider
 def enviar_frecuencias(frecuencias):
-    print(f"\n-> Enviando frecuencias: {frecuencias} Hz a SuperCollider\n")
-    client.send_message("/frecuencia_palabra", frecuencias)
+    config = cargar_configuracion()
+    print(f"\n-> Enviando frecuencias: {frecuencias} Hz a SuperCollider")
+    print(f"   Ataque: {config['ataque']}s, Decaimiento: {config['decaimiento']}s\n")
+    client.send_message("/frecuencia_palabra", [*frecuencias, config['ataque'], config['decaimiento']])
 
 # Función para actualizar configuración
 def actualizar_configuracion():
@@ -18,6 +20,8 @@ def actualizar_configuracion():
     print("\n=== Configuración Actual ===")
     print(f"1) Frecuencia base: {config['frecuencia_base']}")
     print(f"2) Incremento: {config['incremento']}")
+    print(f"3) Ataque (segundos): {config['ataque']}")
+    print(f"4) Decaimiento (segundos): {config['decaimiento']}")
     print("\nIntroduce el número de la opción que deseas modificar o '0' para regresar.")
 
     opcion = input("Opción: ")
@@ -31,6 +35,24 @@ def actualizar_configuracion():
             config["incremento"] = int(input("Introduce el nuevo valor para incremento: "))
         except ValueError:
             print("Entrada inválida. Se requiere un número entero.")
+    elif opcion == "3":
+        try:
+            ataque = float(input("Introduce el nuevo valor para ataque (segundos): "))
+            if ataque >= 0:
+                config["ataque"] = ataque
+            else:
+                print("El ataque debe ser un número positivo.")
+        except ValueError:
+            print("Entrada inválida. Se requiere un número decimal.")
+    elif opcion == "4":
+        try:
+            decaimiento = float(input("Introduce el nuevo valor para decaimiento (segundos): "))
+            if decaimiento >= 0:
+                config["decaimiento"] = decaimiento
+            else:
+                print("El decaimiento debe ser un número positivo.")
+        except ValueError:
+            print("Entrada inválida. Se requiere un número decimal.")
     elif opcion == "0":
         return
 
@@ -46,7 +68,7 @@ frecuencias = crear_diccionario_frecuencias()
 
 # Interfaz del programa para el usuario
 print("=== Generador de Frecuencias para Frases ===")
-print("Escribe '0' en cualquier momento para detener el sonido y salir del programa.\n")
+print("Escribe '0' y presiona 'Enter' en cualquier momento para detener el sonido.\n")
 
 while True:
     print("---------------------------------------------------")
@@ -56,12 +78,12 @@ while True:
     print(" 3) Encontrar combinaciones de letras para un número objetivo")
     print(" 4) Configuración")
     print("---------------------------------------------------")
-    opcion = input("Introduce una opción (o '0' para terminar): ")
+    opcion = input("Introduce una opción (o '0' seguido de 'Enter' para detener): ")
 
     if opcion == "0":
         enviar_frecuencias([0])
         print("==== [El sonido ha sido detenido] ====\n")
-        break
+        # break
 
     elif opcion == "1":
         texto = input("\nIntroduce una palabra o frase: ")
