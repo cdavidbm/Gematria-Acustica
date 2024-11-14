@@ -66,6 +66,8 @@ def actualizar_frecuencias():
 # Crear el diccionario de frecuencias para el programa
 frecuencias = crear_diccionario_frecuencias()
 
+
+'''
 # Interfaz del programa para el usuario
 print("=== Generador de Frecuencias para Frases ===")
 print("Escribe '0' y presiona 'Enter' en cualquier momento para detener el sonido.\n")
@@ -118,3 +120,4 @@ while True:
 
     else:
         print("Opción no válida, por favor elige una opción del menú.\n")
+'''
