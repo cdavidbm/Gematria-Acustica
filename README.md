@@ -1,5 +1,4 @@
-# Gematría Acústica
-## Generador de Frecuencias para Frases
+# Generador de Frecuencias para Frases
 
 Este proyecto convierte palabras y frases en frecuencias sonoras. El programa envía las frecuencias generadas a SuperCollider usando el protocolo OSC (Open Sound Control).
 También sugiere colores únicos para representar cada palabra y permite buscar combinaciones de letras que se aproximen a una frecuencia objetivo. 
@@ -56,9 +55,9 @@ Escribe '0' en cualquier momento para detener el sonido y salir del programa.
 
 ---------------------------------------------------
 Selecciona una opción:
- 1) Acordes de palabras: Convertir una palabra o frase a frecuencia
+ 1) Convertir una palabra o frase a frecuencia ('acorde de palabras')
  2) Enviar frecuencia exacta numérica
- 3) Calculadora de Gematria Acustica: Encontrar combinaciones de letras para un número objetivo
+ 3) Encontrar combinaciones de letras para un número objetivo
  4) Configuración
 ---------------------------------------------------
 Introduce una opción (o '0' para terminar): 
