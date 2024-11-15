@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
     <h1>Generador de Frecuencias para Frases</h1>
-    
+
     <div class="section">
         <h2>1. Convertir Frase a Frecuencias</h2>
         <form id="fraseForm">
@@ -52,35 +52,35 @@
 
 {% block scripts %}
 <script>
-$(document).ready(function() {
-    $('#fraseForm').submit(function(e) {
-        e.preventDefault();
-        $.post('/procesar_frase', $(this).serialize(), function(data) {
-            $('#resultadoFrase').html(
-                `<p>Frecuencias: ${data.frecuencias.join(', ')} Hz</p>
-                 <p>Colores: ${data.colores.join(', ')}</p>`
-            );
+    $(document).ready(function () {
+        $('#fraseForm').submit(function (e) {
+            e.preventDefault();
+            $.post('/procesar_frase', $(this).serialize(), function (data) {
+                let coloresHtml = data.colores.map(color => `
+                <div class="color-box" style="background-color: ${color};">
+                </div>
+                <p class="color-code">${color}</p>`).join('');
+                $('#resultadoFrase').html(
+                    `<p>Frecuencias: ${data.frecuencias.join(', ')} Hz</p>
+                 <p>Colores:</p>
+                 <div class="color-container">${coloresHtml}</div>`
+                );
+            });
+        });
+
+        $('#frecuenciaForm').submit(function (e) {
+            e.preventDefault();
+            $.post('/enviar_frecuencia', $(this).serialize());
+        });
+
+        $('#combinacionesForm').submit(function (e) {
+            e.preventDefault();
+            $.post('/buscar_combinaciones', $(this).serialize(), function (data) {
+                $('#resultadoCombinaciones').html(
+                    `<p>Combinaciones encontradas: ${data.combinaciones.join(', ')}</p>`
+                );
+            });
         });
     });
-
-    $('#frecuenciaForm').submit(function(e) {
-        e.preventDefault();
-        $.post('/enviar_frecuencia', $(this).serialize());
-    });
-
-    $('#combinacionesForm').submit(function(e) {
-        e.preventDefault();
-        $.post('/buscar_combinaciones', $(this).serialize(), function(data) {
-            $('#resultadoCombinaciones').html(
-                `<p>Combinaciones encontradas: ${data.combinaciones.join(', ')}</p>`
-            );
-        });
-    });
-
-    $('#configForm').submit(function(e) {
-        e.preventDefault();
-        $.post('/actualizar_config', $(this).serialize());
-    });
-});
 </script>
 {% endblock %}
