@@ -55,15 +55,17 @@
     $(document).ready(function () {
         $('#fraseForm').submit(function (e) {
             e.preventDefault();
-            $.post('/procesar_frase', $(this).serialize(), function (data) {
+            $.post('/procesar_frase', $(this).serialize(), function(data) {
                 let coloresHtml = data.colores.map(color => `
-                <div class="color-box" style="background-color: ${color};">
-                </div>
-                <p class="color-code">${color}</p>`).join('');
+                    <div class="color-item">
+                        <div class="color-box" style="background-color: ${color};"></div>
+                        <p class="color-code">${color}</p>
+                    </div>
+                `).join('');
                 $('#resultadoFrase').html(
                     `<p>Frecuencias: ${data.frecuencias.join(', ')} Hz</p>
-                 <p>Colores:</p>
-                 <div class="color-container">${coloresHtml}</div>`
+                     <p>Colores:</p>
+                     <div class="color-container">${coloresHtml}</div>`
                 );
             });
         });
@@ -79,6 +81,17 @@
                 $('#resultadoCombinaciones').html(
                     `<p>Combinaciones encontradas: ${data.combinaciones.join(', ')}</p>`
                 );
+            });
+        });
+
+        $('#configForm').submit(function (e) {
+            e.preventDefault();
+            $.post('/actualizar_config', $(this).serialize(), function (data) {
+                if (data.status === 'success') {
+                    alert('Configuración actualizada con éxito.');
+                } else {
+                    alert('Error al actualizar la configuración.');
+                }
             });
         });
     });

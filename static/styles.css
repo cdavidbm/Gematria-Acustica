@@ -28,8 +28,14 @@ label {
 .color-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Aumenta la distancia entre las casillas de color */
+    gap: 10px;
     margin-top: 10px;
+}
+
+.color-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .color-box {
@@ -42,5 +48,5 @@ label {
     text-align: center;
     margin-top: 5px;
     font-size: 12px;
-    color: #000; /* Ajusta el color del texto según el fondo */
+    color: #000;
 }

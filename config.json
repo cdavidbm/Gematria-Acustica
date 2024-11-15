@@ -1,6 +1,6 @@
 {
-    "frecuencia_base": 100,
-    "incremento": 1,
+    "frecuencia_base": 100.0,
+    "incremento": 1.0,
     "ataque": 3.0,
     "decaimiento": 3.0
 }
