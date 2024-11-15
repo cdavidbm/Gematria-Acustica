@@ -1,7 +1,8 @@
 # archivo principal que importa y organiza las funciones de los demás módulos
 
-from config import *
-from frequencias import *
+# Reorganizar imports en main.py
+from config import cargar_configuracion, guardar_configuracion, client
+from frecuencias import crear_diccionario_frecuencias, frase_a_frecuencias
 from color import generar_color_hexadecimal
 from combinaciones import encontrar_combinaciones_optimizada
 from input_usuario import obtener_numero_objetivo
@@ -79,9 +80,7 @@ def actualizar_configuracion():
     guardar_configuracion(config)
     print("Configuración actualizada con éxito.\n")
 
-# Función para regenerar el diccionario de frecuencias después de la actualización
-def actualizar_frecuencias():
-    return crear_diccionario_frecuencias()
+
 
 # Crear el diccionario de frecuencias para el programa
 frecuencias = crear_diccionario_frecuencias()
