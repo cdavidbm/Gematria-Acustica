@@ -56,14 +56,12 @@ Escribe '0' en cualquier momento para detener el sonido y salir del programa.
 ---------------------------------------------------
 Selecciona una opción:
  1) Convertir una palabra o frase a frecuencia ('acorde de palabras')
- 2) Enviar frecuencia exacta numérica
  3) Encontrar combinaciones de letras para un número objetivo
  4) Configuración
 ---------------------------------------------------
 Introduce una opción (o '0' para terminar): 
 ```
 - **Opción 1**: Convierte una palabra o frase en frecuencias y muestra un color hexadecimal único para cada palabra.
-- **Opción 2**: Permite enviar una frecuencia específica a SuperCollider.
 - **Opción 3**: Busca combinaciones de letras que se aproximen a un número objetivo, con un límite de resultados para optimizar el rendimiento.
 - **Opción 4**: Permite modificar la configuración del programa, como la frecuencia base y el incremento.
 

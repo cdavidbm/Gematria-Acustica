@@ -25,13 +25,6 @@ def procesar_frase():
     return jsonify({"frecuencias": frecuencias_palabras, "colores": colores})
 
 
-@app.route("/enviar_frecuencia", methods=["POST"])
-def enviar_frecuencia():
-    frecuencia = float(request.form["frecuencia"])
-    enviar_frecuencias([frecuencia])
-    return jsonify({"status": "success"})
-
-
 @app.route("/buscar_combinaciones", methods=["POST"])
 def buscar_combinaciones():
     objetivo = int(request.form["objetivo"])

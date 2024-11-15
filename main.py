@@ -76,7 +76,6 @@ while True:
     print("---------------------------------------------------")
     print("Selecciona una opción:")
     print(" 1) Convertir una palabra o frase a frecuencia ('acorde de palabras')")
-    print(" 2) Enviar frecuencia exacta numérica")
     print(" 3) Encontrar combinaciones de letras para un número objetivo")
     print(" 4) Configuración")
     print("---------------------------------------------------")
@@ -95,12 +94,6 @@ while True:
         print(f"\nColor hexadecimal para cada palabra:\n{colores}\n")
         enviar_frecuencias(frecuencias_palabras)
 
-    elif opcion == "2":
-        try:
-            frecuencia = float(input("\nIntroduce una frecuencia exacta en Hz: "))
-            enviar_frecuencias([frecuencia])
-        except ValueError:
-            print("Entrada inválida. Por favor, introduce un número válido.")
 
     elif opcion == "3":
         print("\nPor favor, selecciona un número entre 1 y 1000.")

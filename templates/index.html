@@ -13,14 +13,6 @@
     </div>
 
     <div class="section">
-        <h2>2. Enviar Frecuencia Exacta</h2>
-        <form id="frecuenciaForm">
-            <input type="number" name="frecuencia" placeholder="Frecuencia en Hz">
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
-
-    <div class="section">
         <h2>3. Buscar Combinaciones</h2>
         <form id="combinacionesForm">
             <input type="number" name="objetivo" placeholder="Número objetivo (1-1000)">
@@ -68,11 +60,6 @@
                      <div class="color-container">${coloresHtml}</div>`
                 );
             });
-        });
-
-        $('#frecuenciaForm').submit(function (e) {
-            e.preventDefault();
-            $.post('/enviar_frecuencia', $(this).serialize());
         });
 
         $('#combinacionesForm').submit(function (e) {
