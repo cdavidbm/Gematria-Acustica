@@ -44,5 +44,6 @@ def actualizar_config():
     return jsonify({"status": "success"})
 
 
+
 if __name__ == "__main__":
     app.run(debug=True)

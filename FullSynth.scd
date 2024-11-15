@@ -2,9 +2,6 @@
 s.options.sampleRate = 48000;
 s.reboot;
 
-// Variables globales
-~scheduledEvents = List.new;
-
 // OSCdef para reproducir frecuencias
 (
 OSCdef.new(
@@ -14,11 +11,7 @@ OSCdef.new(
         var frecuencias = msg[2..msg.size-3];
         var ataque = msg[msg.size-2];
         var decaimiento = msg[msg.size-1];
-        
-        // Limpiar eventos programados anteriores
-        ~scheduledEvents.do({ |evt| evt.cancel });
-        ~scheduledEvents.clear;
-        
+
         if(modo == 'simultaneo', {
             {
                 Mix.new(
@@ -43,23 +36,9 @@ OSCdef.new(
                     }.play;
                     nil;
                 });
-                ~scheduledEvents.add(evt);
             });
         });
     },
     '/frecuencia_palabra'
-);
-
-OSCdef.new(
-    \detenerSonido,
-    {
-        // Detener todos los eventos programados
-        ~scheduledEvents.do({ |evt| evt.cancel });
-        ~scheduledEvents.clear;
-        // Detener todos los synths activos
-        Server.default.queryAllNodes;
-        Server.default.freeAll;
-    },
-    '/detener_sonido'
 );
 )
