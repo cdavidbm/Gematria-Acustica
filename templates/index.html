@@ -12,8 +12,8 @@
         {% extends "base.html" %}
         {% block content %}
         <div class="container">
-            <h1>Phonoscriptum: Gematría acústica</h1>
-            <h2>Generador de Frecuencias para Frases. Una exploración pseudo-sinestésica</h2>
+            <h1 class="header-text">Phonoscriptum: Gematría acústica</h1>
+            <h2  class="header-text">Generador de Frecuencias para Frases. <br> Exploración pseudo-sinestésica</h2>
 
             <div class="section">
                 <h2>1. Convertir Frase a Frecuencias</h2>
@@ -148,7 +148,7 @@
             .color(0.8, 0.7, 0.9)
             .blend(o0, 0.4)
             .rotate(0.1, 0.1)
-            .modulate(noise(3, 0.1))
+            .modulate(noise(20, 0.1))
             .out()
     </script>
     {% endblock %}

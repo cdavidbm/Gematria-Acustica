@@ -143,3 +143,12 @@ summary {
     font-weight: bold;
     padding: 8px;
 }
+
+.header-text {
+    text-align: center;
+    color: white;
+}
+
+.header-text h1 {
+    margin-bottom: 10px;
+}
