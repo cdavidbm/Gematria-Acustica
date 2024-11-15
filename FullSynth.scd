@@ -2,39 +2,64 @@
 s.options.sampleRate = 48000;
 s.reboot;
 
-~snt = NodeProxy.new;
-~snt.fadeTime_(3);
-~snt.play;
+// Variables globales
+~scheduledEvents = List.new;
 
-// OSCdef para recibir una lista de frecuencias y reproducirlas como un acorde
+// OSCdef para reproducir frecuencias
 (
 OSCdef.new(
     \recibirFrecuencias,
     { |msg, time, addr, port|
-        var frecuencias = msg[1..msg.size-3]; // Obtener la lista de frecuencias
-        var ataque = msg[msg.size-2];         // Obtener el tiempo de ataque
-        var decaimiento = msg[msg.size-1];    // Obtener el tiempo de decaimiento
+        var modo = msg[1];
+        var frecuencias = msg[2..msg.size-3];
+        var ataque = msg[msg.size-2];
+        var decaimiento = msg[msg.size-1];
         
-        ("Frecuencias recibidas: " ++ frecuencias).postln;
-        ("Ataque: " ++ ataque ++ "s, Decaimiento: " ++ decaimiento ++ "s").postln;
+        // Limpiar eventos programados anteriores
+        ~scheduledEvents.do({ |evt| evt.cancel });
+        ~scheduledEvents.clear;
         
-        ~snt.source = {
-            var baseOsc, modOsc, ringMod, env, filtro, ruido;
-            Mix.new(
-                baseOsc = SinOsc.ar(frecuencias, 0, 0.5);
-                modOsc = SinOsc.ar(frecuencias * 1.5, 0, 0.3);
-                ringMod = baseOsc * modOsc;
-                // Usar los valores de ataque y decaimiento recibidos
-                env = EnvGen.ar(Env.perc(ataque, decaimiento), doneAction: 2);
-                ruido = LPF.ar(WhiteNoise.ar(0.07), frecuencias * 2);
-                filtro = LPF.ar(ringMod + ruido, frecuencias * 4);
-                filtro * env;
-            )
-        };
+        if(modo == 'simultaneo', {
+            {
+                Mix.new(
+                    frecuencias.collect({ |freq|
+                        var baseOsc = SinOsc.ar(freq, 0, 0.5);
+                        var modOsc = SinOsc.ar(freq * 1.5, 0, 0.3);
+                        var env = EnvGen.ar(Env.perc(ataque, decaimiento), doneAction: 2);
+                        var filtro = LPF.ar(baseOsc * modOsc, freq * 4);
+                        filtro * env;
+                    })
+                )
+            }.play;
+        }, {
+            frecuencias.do({ |freq, i|
+                var evt = SystemClock.sched(i * (ataque + decaimiento), {
+                    {
+                        var baseOsc = SinOsc.ar(freq, 0, 0.5);
+                        var modOsc = SinOsc.ar(freq * 1.5, 0, 0.3);
+                        var env = EnvGen.ar(Env.perc(ataque, decaimiento), doneAction: 2);
+                        var filtro = LPF.ar(baseOsc * modOsc, freq * 4);
+                        filtro * env;
+                    }.play;
+                    nil;
+                });
+                ~scheduledEvents.add(evt);
+            });
+        });
     },
-    '/frecuencia_palabra' // Mensaje OSC para lista de frecuencias
+    '/frecuencia_palabra'
+);
+
+OSCdef.new(
+    \detenerSonido,
+    {
+        // Detener todos los eventos programados
+        ~scheduledEvents.do({ |evt| evt.cancel });
+        ~scheduledEvents.clear;
+        // Detener todos los synths activos
+        Server.default.queryAllNodes;
+        Server.default.freeAll;
+    },
+    '/detener_sonido'
 );
 )
-
-// Para liberar el NodeProxy cuando sea necesario
-~snt.release;

@@ -7,6 +7,10 @@
         <h2>1. Convertir Frase a Frecuencias</h2>
         <form id="fraseForm">
             <input type="text" name="texto" placeholder="Introduce una palabra o frase">
+            <select name="modo">
+                <option value="simultaneo">Reproducir simultáneamente</option>
+                <option value="individual">Reproducir individualmente</option>
+            </select>
             <button type="submit">Convertir</button>
         </form>
         <div id="resultadoFrase"></div>
@@ -45,6 +49,8 @@
 {% block scripts %}
 <script>
     $(document).ready(function () {
+        // Añade esto al inicio del script existente
+        
         $('#fraseForm').submit(function (e) {
             e.preventDefault();
             $.post('/procesar_frase', $(this).serialize(), function(data) {

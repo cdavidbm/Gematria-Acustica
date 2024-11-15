@@ -50,3 +50,10 @@ label {
     font-size: 12px;
     color: #000;
 }
+
+select {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}

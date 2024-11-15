@@ -19,9 +19,10 @@ def index():
 @app.route("/procesar_frase", methods=["POST"])
 def procesar_frase():
     texto = request.form["texto"]
+    modo = request.form["modo"]
     frecuencias_palabras = frase_a_frecuencias(texto, frecuencias)
     colores = generar_color_hexadecimal(texto)
-    enviar_frecuencias(frecuencias_palabras)
+    enviar_frecuencias(frecuencias_palabras, modo)
     return jsonify({"frecuencias": frecuencias_palabras, "colores": colores})
 
 

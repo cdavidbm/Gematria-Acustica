@@ -8,11 +8,13 @@ from input_usuario import obtener_numero_objetivo
 
 
 # Función para enviar frecuencias a SuperCollider
-def enviar_frecuencias(frecuencias):
+def enviar_frecuencias(frecuencias, modo='simultaneo'):
     config = cargar_configuracion()
     print(f"\n-> Enviando frecuencias: {frecuencias} Hz a SuperCollider")
+    print(f"   Modo: {modo}")
     print(f"   Ataque: {config['ataque']}s, Decaimiento: {config['decaimiento']}s\n")
-    client.send_message("/frecuencia_palabra", [*frecuencias, config['ataque'], config['decaimiento']])
+    client.send_message("/frecuencia_palabra", 
+                       [modo, *frecuencias, config['ataque'], config['decaimiento']])
 
 # Función para actualizar configuración
 def actualizar_configuracion():
