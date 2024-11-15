@@ -20,9 +20,24 @@ def index():
 def procesar_frase():
     texto = request.form["texto"]
     modo = request.form["modo"]
+    efectos = {
+        "delay": {
+            "active": request.form.get("delay") == "true",
+            "amount": float(request.form.get("delayAmount", 0))
+        },
+        "distortion": {
+            "active": request.form.get("distortion") == "true",
+            "amount": float(request.form.get("distortionAmount", 0))
+        },
+        "noise": {
+            "active": request.form.get("noise") == "true",
+            "amount": float(request.form.get("noiseAmount", 0))
+        }
+    }
+    
     frecuencias_palabras = frase_a_frecuencias(texto, frecuencias)
     colores = generar_color_hexadecimal(texto)
-    enviar_frecuencias(frecuencias_palabras, modo)
+    enviar_frecuencias(frecuencias_palabras, modo, efectos)
     return jsonify({"frecuencias": frecuencias_palabras, "colores": colores})
 
 
@@ -42,7 +57,6 @@ def actualizar_config():
     config["decaimiento"] = float(request.form["decaimiento"])
     guardar_configuracion(config)
     return jsonify({"status": "success"})
-
 
 
 if __name__ == "__main__":

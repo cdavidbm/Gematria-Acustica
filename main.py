@@ -8,13 +8,31 @@ from input_usuario import obtener_numero_objetivo
 
 
 # Función para enviar frecuencias a SuperCollider
-def enviar_frecuencias(frecuencias, modo='simultaneo'):
+def enviar_frecuencias(frecuencias, modo='simultaneo', efectos=None):
     config = cargar_configuracion()
     print(f"\n-> Enviando frecuencias: {frecuencias} Hz a SuperCollider")
     print(f"   Modo: {modo}")
     print(f"   Ataque: {config['ataque']}s, Decaimiento: {config['decaimiento']}s\n")
+    
+    if efectos is None:
+        efectos = {
+            "delay": {"active": False, "amount": 0},
+            "distortion": {"active": False, "amount": 0},
+            "noise": {"active": False, "amount": 0}
+        }
+    
+    # Extraer valores de efectos
+    delay_amount = efectos["delay"]["amount"] if efectos["delay"]["active"] else 0
+    dist_amount = efectos["distortion"]["amount"] if efectos["distortion"]["active"] else 0
+    noise_amount = efectos["noise"]["amount"] if efectos["noise"]["active"] else 0
+
+    # Asegurar que las frecuencias sean una lista
+    if not isinstance(frecuencias, list):
+        frecuencias = [frecuencias]
+
     client.send_message("/frecuencia_palabra", 
-                       [modo, *frecuencias, config['ataque'], config['decaimiento']])
+                       [modo, *frecuencias, config['ataque'], config['decaimiento'],
+                        delay_amount, dist_amount, noise_amount])
 
 # Función para actualizar configuración
 def actualizar_configuracion():
@@ -82,11 +100,6 @@ while True:
     print(" 4) Configuración")
     print("---------------------------------------------------")
     opcion = input("Introduce una opción (o '0' seguido de 'Enter' para detener): ")
-
-    if opcion == "0":
-        enviar_frecuencias([0])
-        print("==== [El sonido ha sido detenido] ====\n")
-        # break
 
     elif opcion == "1":
         texto = input("\nIntroduce una palabra o frase: ")

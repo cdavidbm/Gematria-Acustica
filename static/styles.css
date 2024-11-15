@@ -57,3 +57,31 @@ select {
     border-radius: 4px;
     border: 1px solid #ddd;
 }
+
+.audio-options {
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.audio-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.audio-options input[type="range"] {
+    width: 150px;
+}
+
+details {
+    margin: 15px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+summary {
+    cursor: pointer;
+    padding: 5px;
+}

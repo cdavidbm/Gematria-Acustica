@@ -13,6 +13,30 @@
                 <option value="individual">Reproducir individualmente</option>
             </select>
             <button type="submit">Convertir</button>
+            
+            <details>
+                <summary>Opciones de Audio</summary>
+                <div class="audio-options">
+                    
+                    <label>
+                        <input type="checkbox" name="delay" id="delayCheck">
+                        Delay
+                        <input type="range" name="delayAmount" min="0" max="1" step="0.1" value="0.5">
+                    </label>
+                    
+                    <label>
+                        <input type="checkbox" name="distortion" id="distortionCheck">
+                        Distorsión
+                        <input type="range" name="distortionAmount" min="0" max="1" step="0.1" value="0.5">
+                    </label>
+                    
+                    <label>
+                        <input type="checkbox" name="noise" id="noiseCheck">
+                        White Noise
+                        <input type="range" name="noiseAmount" min="0" max="1" step="0.1" value="0.3">
+                    </label>
+                </div>
+            </details>
         </form>
         <div id="resultadoFrase"></div>
     </div>
@@ -51,11 +75,20 @@
 {% block scripts %}
 <script>
     $(document).ready(function () {
-        // Añade esto al inicio del script existente
-
         $('#fraseForm').submit(function (e) {
             e.preventDefault();
-            $.post('/procesar_frase', $(this).serialize(), function (data) {
+            const formData = {
+                texto: $('input[name="texto"]').val(),
+                modo: $('select[name="modo"]').val(),
+                delay: $('#delayCheck').prop('checked'),
+                delayAmount: $('#delayCheck').prop('checked') ? $('input[name="delayAmount"]').val() : 0,
+                distortion: $('#distortionCheck').prop('checked'),
+                distortionAmount: $('#distortionCheck').prop('checked') ? $('input[name="distortionAmount"]').val() : 0,
+                noise: $('#noiseCheck').prop('checked'),
+                noiseAmount: $('#noiseCheck').prop('checked') ? $('input[name="noiseAmount"]').val() : 0
+            };
+            
+            $.post('/procesar_frase', formData, function (data) {
                 let coloresHtml = data.colores.map(color => `
                     <div class="color-item">
                         <div class="color-box" style="background-color: ${color};"></div>
